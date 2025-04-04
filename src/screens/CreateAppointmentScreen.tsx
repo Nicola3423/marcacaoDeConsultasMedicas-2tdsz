@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle } from 'react-native';
@@ -11,11 +12,22 @@ import Header from '../components/Header';
 import DoctorList from '../components/DoctorList';
 import TimeSlotList from '../components/TimeSlotList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+=======
+import React from 'react';
+import styled from 'styled-components/native';
+import { HeaderContainer, HeaderTitle } from '../components/Header';
+import AppointmentForm from '../components/AppointmentForm';
+import theme from '../styles/theme';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RootStackParamList } from '../types';
+>>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
 
 type CreateAppointmentScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'CreateAppointment'>;
 };
 
+<<<<<<< HEAD
 interface Appointment {
   id: string;
   patientId: string;
@@ -115,11 +127,43 @@ const CreateAppointmentScreen: React.FC = () => {
       setError('Erro ao agendar consulta. Tente novamente.');
     } finally {
       setLoading(false);
+=======
+const CreateAppointmentScreen: React.FC<CreateAppointmentScreenProps> = ({ navigation }) => {
+  const handleSubmit = async (appointment: {
+    doctorId: string;
+    date: Date;
+    time: string;
+    description: string;
+  }) => {
+    try {
+      // Recuperar consultas existentes
+      const existingAppointments = await AsyncStorage.getItem('appointments');
+      const appointments = existingAppointments ? JSON.parse(existingAppointments) : [];
+
+      // Adicionar nova consulta
+      const newAppointment = {
+        id: Date.now().toString(),
+        ...appointment,
+        status: 'pending',
+      };
+
+      appointments.push(newAppointment);
+
+      // Salvar no AsyncStorage
+      await AsyncStorage.setItem('appointments', JSON.stringify(appointments));
+
+      // Navegar de volta para a tela inicial
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Erro ao salvar consulta:', error);
+      alert('Erro ao salvar a consulta. Tente novamente.');
+>>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
     }
   };
 
   return (
     <Container>
+<<<<<<< HEAD
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Agendar Consulta</Title>
@@ -162,10 +206,20 @@ const CreateAppointmentScreen: React.FC = () => {
           buttonStyle={styles.cancelButton}
         />
       </ScrollView>
+=======
+      <HeaderContainer>
+        <HeaderTitle>Agendar Consulta</HeaderTitle>
+      </HeaderContainer>
+
+      <Content>
+        <AppointmentForm onSubmit={handleSubmit} />
+      </Content>
+>>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
     </Container>
   );
 };
 
+<<<<<<< HEAD
 const styles = {
   scrollContent: {
     padding: 20,
@@ -187,11 +241,14 @@ const styles = {
   },
 };
 
+=======
+>>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
 const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.background};
 `;
 
+<<<<<<< HEAD
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
@@ -215,3 +272,10 @@ const ErrorText = styled.Text`
 `;
 
 export default CreateAppointmentScreen;
+=======
+const Content = styled.ScrollView`
+  flex: 1;
+`;
+
+export default CreateAppointmentScreen;
+>>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
