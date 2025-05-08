@@ -3,11 +3,7 @@ import styled from 'styled-components/native';
 import { Button, Input, Text } from 'react-native-elements';
 import { Platform, View, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
-<<<<<<< HEAD
-import { Doctor } from '../types/doctors';
-=======
 import { Doctor } from '../types';
->>>>>>> 24ae2a53f3e8b0d07a24c4d09ac84d373e765614
 
 const doctors: Doctor[] = [
    {
